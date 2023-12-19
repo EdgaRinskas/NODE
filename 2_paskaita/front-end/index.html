@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Todos</h2>
+    <ol id="todo-list"></ol>
+
+    <h2>Fruits</h2>
+    <ul id="fruit-list"></ul>
+
+    <script>
+      const renderFruitList = (fruits) => {
+        const list = document.getElementById("fruit-list"); // take the ul from html
+
+        // do a cycle throught array
+        fruits.forEach((fruit) => {
+          // fruit = apple
+          const fruitItem = document.createElement("li"); // create new list it <li> </li>
+          fruitItem.textContent = fruit; // populate data e.g. <li>Carrot</li>
+          list.append(fruitItem); // <ul> <li>Carrot</li> </ul>
+        });
+      };
+
+      const renderTodoList = (todos) => {
+        const list = document.getElementById("todo-list");
+
+        todos.forEach((todo) => {
+          // todo = {userId: 1, id: 1, title: 'test', completed:false}
+          const todoItem = document.createElement("li");
+          todoItem.textContent = todo.title;
+          todoItem.style = todo.completed ? "color: green" : "color: red";
+          list.append(todoItem);
+        });
+      };
+
+      fetch("http://localhost:3000/fruits")
+        .then((resp) => resp.json())
+        .then((response) => {
+          renderFruitList(response);
+        });
+
+      fetch("http://localhost:3000/todos")
+        .then((resp) => resp.json())
+        .then((response) => {
+          renderTodoList(response);
+        });
+    </script>
+  </body>
+</html>

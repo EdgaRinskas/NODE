@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;,">
+  <title>First Page</title>
+</head>
+<body>
+  <form id="nameForm">
+    <label for="firstname">First Name:</label>
+    <input type="text" id="firstname" name="firstname" required>
+
+    <label for="lastname">Last Name:</label>
+    <input type="text" id="lastname" name="lastname" required>
+
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+
+  <script>
+    function submitForm() {
+      const firstname = document.getElementById('firstname').value;
+      const lastname = document.getElementById('lastname').value;
+
+      fetch('http://localhost:3000/addPerson', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstname, lastname }),
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>
